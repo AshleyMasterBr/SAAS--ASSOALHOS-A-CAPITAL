@@ -37,8 +37,17 @@
             --white: #ffffff;
         }
 
-        /* --- HEADER (Preto conforme pedido) --- */
-        header { background: var(--secondary); padding: 12px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; width: %; top: 0; z-index: 1000; }
+        /* --- HEADER (AJUSTADO) --- */
+        header { 
+            background: var(--secondary); 
+            padding: 12px 0; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); 
+            position: fixed; 
+            width: 100%; 
+            left: 0; 
+            top: 0; 
+            z-index: 1000; 
+        }
         header .flex { display: flex; justify-content: space-between; align-items: center; }
         
         .logo { 
@@ -62,7 +71,7 @@
             min-height: 100vh;
             display: flex; align-items: center; justify-content: center;
             text-align: center; color: white;
-            padding: 90px 0 60px 0;
+            padding: 110px 0 60px 0; /* Aumentado um pouco para dar respiro ao header fixo */
         }
         .hero-content { max-width: 800px; width: 100%; }
         .hero h1 { font-size: 2rem; margin-bottom: 10px; text-transform: uppercase; line-height: 1.2; }
@@ -76,7 +85,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.4);
             max-width: 500px; margin: 0 auto;
             text-align: left;
-            border-top: 5px solid var(--primary); /* Detalhe em Vermelho */
+            border-top: 5px solid var(--primary);
         }
         .form-group { margin-bottom: 12px; }
         .form-group label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.85rem; color: #555; }
