@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Orçamento Online | Assoalhos Classe A</title>
+    
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '743224956543243');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=743224956543243&ev=PageView&noscript=1"
+    /></noscript>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* --- RESET & BASE --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Open Sans', sans-serif; color: #333; line-height: 1.6; }
+        h1, h2, h3 { font-family: 'Montserrat', sans-serif; font-weight: 700; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        
+        :root {
+            --primary: #C6121E; /* Vermelho Classe A */
+            --secondary: #1A1A1B; /* Grafite Escuro */
+            --accent: #25D366; /* Verde WhatsApp */
+            --white: #ffffff;
+        }
+
+        /* --- HEADER (Preto conforme pedido) --- */
+        header { background: var(--secondary); padding: 12px 0; box-shadow: 0 2px 10px rgba(0,0,0,0.1); position: fixed; width: 100%; top: 0; z-index: 1000; }
+        header .flex { display: flex; justify-content: space-between; align-items: center; }
+        
+        .logo { 
+            display: flex; align-items: center; gap: 8px;
+            font-size: 1.2rem; font-weight: 900; color: var(--white); letter-spacing: -0.5px; text-transform: uppercase; 
+        }
+        .logo img { height: 35px; width: auto; }
+        .logo span { color: var(--primary); }
+
+        .btn-zap-header { 
+            background: var(--accent); color: white; padding: 8px 16px; border-radius: 50px; 
+            text-decoration: none; font-weight: 600; font-size: 0.9rem; 
+            display: flex; align-items: center; gap: 6px; 
+            white-space: nowrap;
+        }
+
+        /* --- HERO SECTION --- */
+        .hero { 
+            background: linear-gradient(rgba(26, 26, 27, 0.85), rgba(26, 26, 27, 0.85)), url('fundo.jpg'); 
+            background-size: cover; background-position: center; 
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; color: white;
+            padding: 90px 0 60px 0;
+        }
+        .hero-content { max-width: 800px; width: 100%; }
+        .hero h1 { font-size: 2rem; margin-bottom: 10px; text-transform: uppercase; line-height: 1.2; }
+        .hero h1 span { color: var(--primary); }
+        .hero p { font-size: 1rem; margin-bottom: 25px; opacity: 0.9; }
+
+        /* --- CALCULADORA --- */
+        .calculator-box {
+            background: white; color: var(--secondary);
+            padding: 25px; border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+            max-width: 500px; margin: 0 auto;
+            text-align: left;
+            border-top: 5px solid var(--primary); /* Detalhe em Vermelho */
+        }
+        .form-group { margin-bottom: 12px; }
+        .form-group label { display: block; font-weight: 600; margin-bottom: 5px; font-size: 0.85rem; color: #555; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 8px; font-size: 0.95rem; outline: none; transition: 0.3s; background: #f9f9f9; }
+        .form-group input:focus, .form-group select:focus { border-color: var(--primary); background: #fff; }
+        
+        .btn-calc { 
+            width: 100%; background: var(--primary); color: var(--white); 
+            border: 1px solid var(--primary); padding: 15px; font-size: 1rem; font-weight: 700; text-transform: uppercase; 
+            border-radius: 8px; cursor: pointer; transition: 0.3s; margin-top: 10px;
+        }
+        .btn-calc:hover { background: #a50f19; transform: translateY(-2px); }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 2000;
+            display: none; justify-content: center; align-items: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white; padding: 25px; border-radius: 15px;
+            max-width: 500px; width: 100%; text-align: center;
+            position: relative; animation: slideUp 0.4s ease;
+            border-top: 5px solid var(--primary);
+        }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 1.5rem; cursor: pointer; color: #999; }
+        
+        .price-display { background: #f4f4f4; padding: 15px; border-radius: 10px; margin: 15px 0; border-left: 5px solid var(--primary); }
+        .total-label { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: #666; font-weight: 700; }
+        .total-value { font-size: 2.2rem; font-weight: 900; color: var(--primary); }
+        
+        .bonus-list { text-align: left; margin-bottom: 20px; border: 1px dashed #ccc; padding: 15px; border-radius: 8px; }
+        .bonus-item { display: flex; justify-content: space-between; margin-bottom: 8px; font-size: 0.85rem; }
+        .bonus-item.free { color: #333; font-weight: 700; }
+        .bonus-item.free i { color: var(--primary); }
+
+        .btn-action { 
+            display: flex; justify-content: center; align-items: center; gap: 8px;
+            width: 100%; background: var(--accent); color: white; 
+            padding: 15px; text-decoration: none; font-weight: 700; border-radius: 8px; 
+            font-size: 1rem; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.02); } 100% { transform: scale(1); } }
+        
+        .disclaimer { margin-top: 15px; font-size: 0.7rem; color: #777; }
+
+        .features { padding: 50px 0; text-align: center; background: #fff; }
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; margin-top: 30px; }
+        
+        .feature-item i { font-size: 2rem; color: var(--primary); margin-bottom: 15px; }
+        .feature-item h3 { margin-bottom: 10px; font-size: 1.1rem; min-height: 2.5em; display: flex; align-items: flex-start; justify-content: center; }
+        .feature-item p { font-size: 0.9rem; }
+
+        footer { background: var(--secondary); color: #ccc; padding: 20px 0; font-size: 0.8rem; }
+        .footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .footer-brand { display: flex; align-items: center; gap: 8px; color: white; font-weight: 700; text-transform: uppercase; }
+        .footer-text { text-align: right; opacity: 0.8; }
+
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 1.6rem; }
+            .total-value { font-size: 1.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container flex">
+            <div class="logo">
+                <img src="logo.png" alt="Logo" onerror="this.style.display='none'"> 
+                <div>ASSOALHOS <span style="color: var(--primary);">CLASSE A</span></div>
+            </div>
+            <a href="https://wa.me/5511940030395" target="_blank" class="btn-zap-header"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container hero-content">
+            <h1>Instalação EM <br> <span style="color: var(--primary);">SÃO PAULO E REGIÃO</span></h1>
+            <p>Faça seu orçamento em 30s - Garanta <strong style="color: #fff;">CONDIÇÕES EXCLUSIVAS</strong>.</p>
+            
+            <div class="calculator-box">
+                <div class="form-group">
+                    <label>Qual a metragem aproximada? (m²)</label>
+                    <input type="number" id="metragem" placeholder="Ex: 45">
+                </div>
+                
+                <div class="form-group">
+                    <label>Piso atual do local?</label>
+                    <select id="pisoAtual">
+                        <option value="Contrapiso">Contrapiso (Cimento)</option>
+                        <option value="Cerâmica">Cerâmica / Porcelanato</option>
+                        <option value="Madeira">Madeira / Taco</option>
+                        <option value="Outro">Outro / Não sei</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>O piso está nivelado?</label>
+                    <select id="nivelamento">
+                        <option value="Nao sei">Não sei dizer</option>
+                        <option value="Sim">Sim, está reto</option>
+                        <option value="Não">Não, está irregular</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Escolha o tipo de Piso:</label>
+                    <select id="modelo">
+                        <option value="100.00" data-tipo="laminado">Laminado (Instalado + Rodapé 5cm) - R$ 100,00/m²</option>
+                        <option value="140.00" data-tipo="vinilico">Vinílico (Completo + Rodapé 5cm) - R$ 140,00/m²</option>
+                    </select>
+                </div>
+
+                <button class="btn-calc" onclick="calcular()">VER PREÇO ESTIMADO</button>
+            </div>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <h2>Por que escolher a <span style="color:var(--primary)">ASSOALHOS CLASSE A</span>?</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Instalação Rápida</h3>
+                    <p>Equipe rápida e limpa. Entregamos sua obra sem dor de cabeça.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-medal"></i>
+                    <h3>Garantia Total</h3>
+                    <p>Segurança na instalação e nos materiais utilizados.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="fas fa-comments-dollar"></i>
+                    <h3>Negociação Direta</h3>
+                    <p>Fale diretamente com quem resolve e pague facilitado.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container footer-row">
+            <div class="footer-brand">
+                <img src="logo.png" alt="Logo" onerror="this.style.display='none'">
+                <div>ASSOALHOS <span style="color: var(--primary);">CLASSE A</span></div>
+            </div>
+            <div class="footer-text">
+                &copy; 2026. Desenvolvido por Legado Performance
+            </div>
+        </div>
+    </footer>
+
+    <div class="modal-overlay" id="modalResult">
+        <div class="modal-content">
+            <span class="close-modal" onclick="fecharModal()">&times;</span>
+            <h3>Orçamento Estimado</h3>
+            <div class="price-display">
+                <div class="total-label">Investimento Aproximado</div>
+                <div class="total-value" id="valorFinal">R$ 0,00</div>
+            </div>
+
+            <div class="bonus-list" id="listaInclusos">
+                </div>
+
+            <a href="#" id="linkZap" class="btn-action" target="_parent">
+                AGENDAR VISITA <i class="fab fa-whatsapp"></i>
+            </a>
+            <p class="disclaimer">*Valor estimado com base nos materiais e mão de obra inclusos. Sujeito a avaliação técnica.</p>
+        </div>
+    </div>
+
+    <script>
+        function calcular() {
+            const metragem = parseFloat(document.getElementById('metragem').value);
+            const modeloEl = document.getElementById('modelo');
+            const precoMetro = parseFloat(modeloEl.value);
+            const tipoPiso = modeloEl.options[modeloEl.selectedIndex].getAttribute('data-tipo');
+            const modeloNome = modeloEl.options[modeloEl.selectedIndex].text.split('(')[0];
+            
+            const pisoAtual = document.getElementById('pisoAtual').value;
+            const nivelamento = document.getElementById('nivelamento').value;
+
+            if (isNaN(metragem) || metragem < 1) {
+                alert("Por favor, digite uma metragem válida.");
+                return;
+            }
+
+            let total = metragem * precoMetro;
+            const valorFormatado = total.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            document.getElementById('valorFinal').innerText = valorFormatado;
+
+            let htmlInclusos = `<p style="margin-bottom:10px; font-weight:600;">O que está incluso no seu pacote:</p>`;
+            
+            if(tipoPiso === 'vinilico') {
+                htmlInclusos += `
+                    <div class="bonus-item free"><span><i class="fas fa-check"></i> Primer + Autonivelante</span><span>INCLUSO</span></div>
+                    <div class="bonus-item free"><span><i class="fas fa-check"></i> Regularização + Cola</span><span>INCLUSO</span></div>
+                    <div class="bonus-item free"><span><i class="fas fa-check"></i> Rodapé 5cm Branco</span><span>INCLUSO</span></div>
+                `;
+            } else {
+                htmlInclusos += `
+                    <div class="bonus-item free"><span><i class="fas fa-check"></i> Manta Acústica</span><span>INCLUSO</span></div>
+                    <div class="bonus-item free"><span><i class="fas fa-check"></i> Rodapé 5cm</span><span>INCLUSO</span></div>
+                `;
+            }
+            htmlInclusos += `<div class="bonus-item free"><span><i class="fas fa-check"></i> Mão de Obra Especializada</span><span>INCLUSO</span></div>`;
+            
+            document.getElementById('listaInclusos').innerHTML = htmlInclusos;
+            
+            const textoZap = `Olá, Assoalhos Classe A! Fiz um orçamento pelo site:\n\n` +
+                             ` *Metragem:* ${metragem}m²\n` +
+                             ` *Piso:* ${modeloNome}\n` +
+                             ` *Rodapé:* Incluso (5cm)\n` +
+                             ` *Instalação:* Incluso\n` +
+                             ` *Valor Estimado:* ${valorFormatado}\n\n` +
+                             ` *Detalhes:* Atual: ${pisoAtual} / Nivelado: ${nivelamento}\n\n` +
+                             `Quero agendar a visita técnica para confirmar.`;
+            
+            const link = `https://wa.me/5511940030395?text=${encodeURIComponent(textoZap)}`;
+            document.getElementById('linkZap').href = link;
+            document.getElementById('modalResult').style.display = 'flex';
+
+            if(typeof fbq === 'function') {
+                fbq('track', 'Lead', { value: total, currency: 'BRL' });
+            }
+        }
+
+        function fecharModal() { document.getElementById('modalResult').style.display = 'none'; }
+        window.onclick = function(event) { if (event.target == document.getElementById('modalResult')) fecharModal(); }
+    </script>
+</body>
+</html>
