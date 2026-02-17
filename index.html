@@ -5,6 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orçamento Online | Assoalhos Classe A</title>
     
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17956364460"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17956364460');
+    </script>
+
     <script>
     !function(f,b,e,v,n,t,s)
     {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -37,7 +45,7 @@
             --white: #ffffff;
         }
 
-        /* --- HEADER (AJUSTADO) --- */
+        /* --- HEADER --- */
         header { 
             background: var(--secondary); 
             padding: 12px 0; 
@@ -71,7 +79,7 @@
             min-height: 100vh;
             display: flex; align-items: center; justify-content: center;
             text-align: center; color: white;
-            padding: 110px 0 60px 0; /* Aumentado um pouco para dar respiro ao header fixo */
+            padding: 110px 0 60px 0;
         }
         .hero-content { max-width: 800px; width: 100%; }
         .hero h1 { font-size: 2rem; margin-bottom: 10px; text-transform: uppercase; line-height: 1.2; }
@@ -314,8 +322,19 @@
             document.getElementById('linkZap').href = link;
             document.getElementById('modalResult').style.display = 'flex';
 
+            // --- TRACKING FB ---
             if(typeof fbq === 'function') {
                 fbq('track', 'Lead', { value: total, currency: 'BRL' });
+            }
+
+            // --- TRACKING GOOGLE ADS ---
+            if(typeof gtag === 'function') {
+                gtag('event', 'conversion', {
+                    'send_to': 'AW-17956364460/HduwCP_tpvkbEKzBofJC',
+                    'value': total, // Aqui ele passa o valor real calculado, o que é muito melhor que 1.0
+                    'currency': 'BRL',
+                    'transaction_id': ''
+                });
             }
         }
 
